@@ -145,16 +145,6 @@ CloneRepository(const repo_t &repo, const std::string &fullpath) noexcept
 int 
 main(int argc, char *argv[])
 {	
-    #define TESTING 1
-#if TESTING
-    auto fake_argc = 5;
-    char *fake_argv[5] = {0};
-     fake_argv[1 +  0]  = acow_string_alloc_copy("-o                       ");
-     fake_argv[1 +  1]  = acow_string_alloc_copy("../Projects/AmazingCow   ");
-     fake_argv[1 +  2] = acow_string_alloc_copy("-f                       ");
-     fake_argv[1 +  3] = acow_string_alloc_copy("~/Desktop/repos.txt");
-#endif
-
     // Help / Version
     auto flag_help = CMD::Flag::Create(
         "h", "help", "Show this screen.", 
@@ -196,11 +186,7 @@ main(int argc, char *argv[])
             flag_organizations_file
         }
     );
-#if TESTING
-    parser.Parse(fake_argc, fake_argv);
-#else 
     parser.Parse(argc, argv);
-#endif
     
     // Help / Version.
     if(flag_help   ->Found()) { ShowHelp(parser.GenerateHelpString()); }
